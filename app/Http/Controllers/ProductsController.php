@@ -24,18 +24,25 @@ class ProductsController extends Controller
             'quantity' => 'required|gt:0',
             'price' => 'required|gt:0',
             'type_id' => 'required|exists:types,id',
-            'supplier_id' => 'nullable|exists:suppliers,id'
+            'supplier_id' => 'nullable|exists:suppliers,id',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
         
-        //não esquecer import do Product model.
-        Product::create([
+        $data = [
             'name' => $request->name,
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
             'type_id' => $request->type_id,
             'supplier_id' => $request->supplier_id
-        ]);
+        ];
+
+        if ($request->hasFile('imagem')) {
+            $data['imagem'] = $request->file('imagem')->store('produtos', 'public');
+        }
+
+        //não esquecer import do Product model.
+        Product::create($data);
 
         return redirect('/products')->with('success', 'Produto salvo com sucesso!');
     }
@@ -58,16 +65,32 @@ class ProductsController extends Controller
     }
     public function update(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:2|max:50',
+            'quantity' => 'required|gt:0',
+            'price' => 'required|gt:0',
+            'type_id' => 'required|exists:types,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+
         $product = Product::find($request->id);
-        //método update faz um update product set name = ? etc...
-        $product->update([
+        
+        $data = [
             'name' => $request->name,
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
             'type_id' => $request->type_id,
             'supplier_id' => $request->supplier_id
-        ]);
+        ];
+
+        if ($request->hasFile('imagem')) {
+            $data['imagem'] = $request->file('imagem')->store('produtos', 'public');
+        }
+
+        //método update faz um update product set name = ? etc...
+        $product->update($data);
         return redirect('/products')->with('success', 'Produto atualizado
 com sucesso!');
     }

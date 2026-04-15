@@ -12,7 +12,7 @@
 
         <!-- Form Card -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <form action="{{ url('products/update') }}" method="POST" class="space-y-6">
+            <form action="{{ url('products/update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 <input type="hidden" name="id" value="{{ $product->id }}">
 
@@ -115,6 +115,27 @@
                         @endforeach
                     </select>
                     @error('supplier_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Image -->
+                <div>
+                    <label for="imagem" class="block text-sm font-medium text-gray-700 mb-2">Imagem do Produto</label>
+                    @if($product->imagem)
+                        <div class="mb-2">
+                            <img src="{{ asset('storage/' . $product->imagem) }}" alt="Imagem atual" class="w-32 h-32 object-cover rounded-md border">
+                        </div>
+                    @endif
+                    <input
+                        type="file"
+                        id="imagem"
+                        name="imagem"
+                        accept="image/*"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                    <p class="mt-1 text-sm text-gray-500">Deixe em branco para manter a imagem atual.</p>
+                    @error('imagem')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

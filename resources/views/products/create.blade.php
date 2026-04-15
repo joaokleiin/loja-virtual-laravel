@@ -12,7 +12,7 @@
 
         <!-- Form Card -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <form action="{{ url('products/new') }}" method="POST" class="space-y-6">
+            <form action="{{ url('products/new') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
                 <!-- Name -->
@@ -114,6 +114,21 @@
                         @endforeach
                     </select>
                     @error('supplier_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Image -->
+                <div>
+                    <label for="imagem" class="block text-sm font-medium text-gray-700 mb-2">Imagem do Produto</label>
+                    <input
+                        type="file"
+                        id="imagem"
+                        name="imagem"
+                        accept="image/*"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                    @error('imagem')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
