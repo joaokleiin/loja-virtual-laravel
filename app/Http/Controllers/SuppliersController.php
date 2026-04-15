@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class SuppliersController extends Controller
@@ -33,7 +34,7 @@ class SuppliersController extends Controller
     public function index()
     {
         return view('suppliers.index', [
-            'suppliers' => Supplier::all()
+            'suppliers' => Supplier::withCount('products')->get()
         ]);
     }
 
@@ -58,7 +59,21 @@ class SuppliersController extends Controller
     public function destroy($id)
     {
         $supplier = Supplier::find($id);
-        $supplier->delete();
+
+        if (!$supplier) {
+            return redirect('/suppliers')->with('error', 'Fornecedor não encontrado.');
+        }
+
+        if ($supplier->products()->exists()) {
+            return redirect('/suppliers')->with('error', 'Não é possível excluir este fornecedor porque ele possui produtos vinculados.');
+        }
+
+        try {
+            $supplier->delete();
+        } catch (QueryException $e) {
+            return redirect('/suppliers')->with('error', 'Não foi possível excluir o fornecedor. Verifique se há registros vinculados a ele.');
+        }
+
         return redirect('/suppliers')->with('success', 'Fornecedor excluído com sucesso!');
     }
 }

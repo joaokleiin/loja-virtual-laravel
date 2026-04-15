@@ -47,7 +47,7 @@
                                     {{ $supplier->phone ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    {{ $supplier->products->count() }} produto{{ $supplier->products->count() !== 1 ? 's' : '' }}
+                                    {{ $supplier->products_count }} produto{{ $supplier->products_count !== 1 ? 's' : '' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
