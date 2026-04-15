@@ -36,7 +36,8 @@ class ProductsController extends Controller
             'type_id' => $request->type_id,
             'supplier_id' => $request->supplier_id
         ]);
-        return ' <p> Produto salvo com sucesso! </p> ';
+
+        return redirect('/products')->with('success', 'Produto salvo com sucesso!');
     }
 
     //função que irá mostrar a view de listagem
