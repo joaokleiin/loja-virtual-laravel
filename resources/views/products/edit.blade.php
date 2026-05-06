@@ -3,66 +3,66 @@
 @section('title', 'Editar Produto')
 
 @section('content')
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-3xl mx-auto">
         <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Editar Produto</h1>
-            <p class="text-gray-600 mt-1">Atualize as informações do produto</p>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 drop-shadow-sm">Editar Produto</h1>
+            <p class="text-gray-600 mt-2 text-lg">Atualize as informações do produto</p>
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <form action="{{ url('products/update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-8">
+            <form action="{{ url('products/update') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                 @csrf
                 <input type="hidden" name="id" value="{{ $product->id }}">
 
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nome do Produto</label>
+                    <label for="name" class="block text-sm font-semibold text-gray-800 mb-3">Nome do Produto</label>
                     <input
                         type="text"
                         id="name"
                         name="name"
                         value="{{ old('name', $product->name) }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300"
                         placeholder="Digite o nome do produto"
                     >
                     @error('name')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Description -->
                 <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+                    <label for="description" class="block text-sm font-semibold text-gray-800 mb-3">Descrição</label>
                     <textarea
                         id="description"
                         name="description"
-                        rows="3"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        rows="4"
+                        class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300"
                         placeholder="Descrição opcional do produto"
                     >{{ old('description', $product->description) }}</textarea>
                 </div>
 
                 <!-- Quantity and Price Row -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Quantidade</label>
+                        <label for="quantity" class="block text-sm font-semibold text-gray-800 mb-3">Quantidade</label>
                         <input
                             type="number"
                             id="quantity"
                             name="quantity"
                             value="{{ old('quantity', $product->quantity) }}"
                             min="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300"
                             placeholder="0"
                         >
                         @error('quantity')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Preço (R$)</label>
+                        <label for="price" class="block text-sm font-semibold text-gray-800 mb-3">Preço (R$)</label>
                         <input
                             type="number"
                             id="price"
@@ -70,22 +70,22 @@
                             value="{{ old('price', $product->price) }}"
                             min="0"
                             step="0.01"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300"
                             placeholder="0.00"
                         >
                         @error('price')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
 
                 <!-- Type -->
                 <div>
-                    <label for="type_id" class="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
+                    <label for="type_id" class="block text-sm font-semibold text-gray-800 mb-3">Tipo</label>
                     <select
                         id="type_id"
                         name="type_id"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300"
                     >
                         <option value="">Selecione um tipo</option>
                         @foreach($types as $type)
@@ -95,17 +95,17 @@
                         @endforeach
                     </select>
                     @error('type_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Supplier -->
                 <div>
-                    <label for="supplier_id" class="block text-sm font-medium text-gray-700 mb-2">Fornecedor</label>
+                    <label for="supplier_id" class="block text-sm font-semibold text-gray-800 mb-3">Fornecedor</label>
                     <select
                         id="supplier_id"
                         name="supplier_id"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300"
                     >
                         <option value="">Selecione um fornecedor</option>
                         @foreach($suppliers as $supplier)
@@ -115,16 +115,16 @@
                         @endforeach
                     </select>
                     @error('supplier_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Image -->
                 <div>
-                    <label for="imagem" class="block text-sm font-medium text-gray-700 mb-2">Imagem do Produto</label>
+                    <label for="imagem" class="block text-sm font-semibold text-gray-800 mb-3">Imagem do Produto</label>
                     @if($product->imagem)
-                        <div class="mb-2">
-                            <img src="{{ asset('storage/' . $product->imagem) }}" alt="Imagem atual" class="w-32 h-32 object-cover rounded-md border">
+                        <div class="mb-4">
+                            <img src="{{ asset('storage/' . $product->imagem) }}" alt="Imagem atual" class="w-32 h-32 object-cover rounded-xl border border-white/20 shadow-md">
                         </div>
                     @endif
                     <input
@@ -132,20 +132,20 @@
                         id="imagem"
                         name="imagem"
                         accept="image/*"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                     >
-                    <p class="mt-1 text-sm text-gray-500">Deixe em branco para manter a imagem atual.</p>
+                    <p class="mt-2 text-sm text-gray-500">Deixe em branco para manter a imagem atual.</p>
                     @error('imagem')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Actions -->
-                <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-                    <a href="{{ url('products') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                <div class="flex justify-end space-x-4 pt-8 border-t border-white/10">
+                    <a href="{{ url('products') }}" class="px-6 py-3 text-sm font-medium text-gray-700 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl hover:bg-white/30 transition-all duration-300 hover:shadow-lg">
                         Cancelar
                     </a>
-                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 transition-colors">
+                    <button type="submit" class="px-6 py-3 text-sm font-medium text-white bg-blue-600/80 backdrop-blur-sm border border-blue-400/30 rounded-xl hover:bg-blue-700/90 transition-all duration-300 hover:shadow-xl hover:scale-105">
                         Salvar Alterações
                     </button>
                 </div>
