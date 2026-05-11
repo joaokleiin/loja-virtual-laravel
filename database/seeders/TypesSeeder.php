@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Type;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TypesSeeder extends Seeder
@@ -13,9 +12,12 @@ class TypesSeeder extends Seeder
      */
     public function run(): void
     {
-        Type::create(['name' => 'Eletrônicos']);
-        Type::create(['name' => 'Roupas']);
-        Type::create(['name' => 'Alimentos']);
-        Type::create(['name' => 'Livros']);
+        if (! Type::where('name', 'like', 'Eletr%')->exists()) {
+            Type::create(['name' => 'Eletronicos']);
+        }
+
+        Type::firstOrCreate(['name' => 'Roupas']);
+        Type::firstOrCreate(['name' => 'Alimentos']);
+        Type::firstOrCreate(['name' => 'Livros']);
     }
 }
