@@ -1,14 +1,16 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\TypesController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/dashboard', function () {
     return view('dashboard.index');
-});
+})->name('dashboard');
 
 Route::get('/products', [ProductsController::class, 'index']);
 Route::get('/products/new', [ProductsController::class, 'create']);
