@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja Virtual</title>
+    <title>Alpha Shop</title>
 
     <script>
         // Aplica o tema salvo antes da pagina carregar.
@@ -213,9 +213,9 @@
     <header class="sticky top-0 z-40 border-b backdrop-blur-xl store-surface">
         <nav class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600 text-lg font-black text-white shadow-sm">LV</span>
+                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600 text-lg font-black text-white shadow-sm">AS</span>
                 <span>
-                    <span class="block text-xl font-black tracking-tight">Loja Virtual</span>
+                    <span class="block text-xl font-black tracking-tight">Alpha Shop</span>
                     <span class="block text-sm store-muted">Explore nossa loja</span>
                 </span>
             </a>
@@ -301,7 +301,7 @@
                 <div class="relative">
                     <div class="absolute -inset-4 rounded-3xl bg-white/10 blur-2xl"></div>
                     <div class="relative overflow-hidden rounded-3xl border border-white/20 bg-white/10 p-3 shadow-2xl backdrop-blur">
-                        <img src="{{ asset('images/images.jpg') }}" alt="Capa da Loja Virtual" class="h-72 w-full rounded-2xl object-cover sm:h-80">
+                        <img src="{{ asset('images/hero-store.svg') }}" alt="Banner da Loja Virtual com produtos e ofertas" class="h-72 w-full rounded-2xl object-cover sm:h-80">
                         <div class="mt-3 grid grid-cols-2 gap-3">
                             <div class="rounded-2xl bg-white/10 p-4">
                                 <p class="text-sm text-slate-200">Produtos em destaque</p>

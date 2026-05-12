@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Type;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductsController extends Controller
             'price' => 'required|gt:0',
             'type_id' => 'required|exists:types,id',
             'supplier_id' => 'nullable|exists:suppliers,id',
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
         
         $data = [
@@ -71,10 +72,11 @@ class ProductsController extends Controller
             'price' => 'required|gt:0',
             'type_id' => 'required|exists:types,id',
             'supplier_id' => 'nullable|exists:suppliers,id',
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
 
         $product = Product::find($request->id);
+        $imagemAntiga = null;
         
         $data = [
             'name' => $request->name,
@@ -86,11 +88,16 @@ class ProductsController extends Controller
         ];
 
         if ($request->hasFile('imagem')) {
+            $imagemAntiga = $product->imagem;
             $data['imagem'] = $request->file('imagem')->store('produtos', 'public');
         }
 
         //método update faz um update product set name = ? etc...
         $product->update($data);
+
+        if ($imagemAntiga) {
+            Storage::disk('public')->delete($imagemAntiga);
+        }
         return redirect('/products')->with('success', 'Produto atualizado
 com sucesso!');
     }

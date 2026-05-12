@@ -125,7 +125,7 @@
                         type="file"
                         id="imagem"
                         name="imagem"
-                        accept="image/*"
+                        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                         class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 backdrop-blur-sm transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                     >
                     @error('imagem')

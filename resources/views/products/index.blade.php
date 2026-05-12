@@ -23,31 +23,37 @@
         <!-- Products Table -->
         <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-white/20">
+                <table class="w-full min-w-[980px] divide-y divide-white/20">
                     <thead class="bg-white/5">
                         <tr>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagem</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantidade</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fornecedor</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                            <th class="w-24 px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagem</th>
+                            <th class="min-w-[220px] px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                            <th class="w-32 px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
+                            <th class="w-32 px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantidade</th>
+                            <th class="w-36 px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                            <th class="w-40 px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fornecedor</th>
+                            <th class="w-52 px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="bg-transparent divide-y divide-white/10">
                         @foreach($products as $product)
+                            @php
+                                $placeholderImage = asset('images/produto-padrao.svg');
+                                $productImage = $placeholderImage;
+
+                                if ($product->imagem && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->imagem)) {
+                                    $productImage = asset('storage/' . $product->imagem);
+                                }
+                            @endphp
+
                             <tr class="hover:bg-white/10 transition-all duration-200">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($product->imagem)
-                                        <img src="{{ asset('storage/' . $product->imagem) }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover rounded-xl border border-white/20 shadow-md">
-                                    @else
-                                        <div class="w-16 h-16 bg-gray-200/50 rounded-xl flex items-center justify-center border border-white/20 shadow-md backdrop-blur-sm">
-                                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                        </div>
-                                    @endif
+                                    <img
+                                        src="{{ $productImage }}"
+                                        alt="{{ $product->name }}"
+                                        class="h-16 w-16 rounded-xl border border-white/20 object-cover shadow-md"
+                                        onerror="this.onerror=null; this.src='{{ $placeholderImage }}';"
+                                    >
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
@@ -67,15 +73,15 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {{ $product->supplier->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div class="flex space-x-3">
-                                        <a href="{{ url('/products/update', ['id' => $product->id]) }}" class="inline-flex items-center px-3 py-2 bg-blue-500/20 backdrop-blur-sm text-blue-700 rounded-lg hover:bg-blue-500/30 transition-all duration-300 hover:shadow-md hover:scale-105 border border-blue-300/30">
+                                <td class="min-w-[13rem] px-6 py-4 text-right text-sm font-medium">
+                                    <div class="flex flex-nowrap justify-end gap-3">
+                                        <a href="{{ url('/products/update', ['id' => $product->id]) }}" class="inline-flex shrink-0 items-center whitespace-nowrap px-3 py-2 bg-blue-500/20 backdrop-blur-sm text-blue-700 rounded-lg hover:bg-blue-500/30 transition-all duration-300 hover:shadow-md hover:scale-105 border border-blue-300/30">
                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                             </svg>
                                             Editar
                                         </a>
-                                        <button onclick="confirmDelete('{{ url('/products/delete', ['id' => $product->id]) }}')" class="inline-flex items-center px-3 py-2 bg-red-500/20 backdrop-blur-sm text-red-700 rounded-lg hover:bg-red-500/30 transition-all duration-300 hover:shadow-md hover:scale-105 border border-red-300/30">
+                                        <button onclick="confirmDelete('{{ url('/products/delete', ['id' => $product->id]) }}')" class="inline-flex shrink-0 items-center whitespace-nowrap px-3 py-2 bg-red-500/20 backdrop-blur-sm text-red-700 rounded-lg hover:bg-red-500/30 transition-all duration-300 hover:shadow-md hover:scale-105 border border-red-300/30">
                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                             </svg>
