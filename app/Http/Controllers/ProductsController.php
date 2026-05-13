@@ -7,9 +7,47 @@ use App\Models\Type;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductsController extends Controller
 {
+
+    public function report()
+    {
+        return view('products.report', [
+            'types' => Type::orderBy('name')->get()
+        ]);
+    }
+
+    public function reportPdf(Request $request)
+    {
+        $products = DB::table('products')
+            ->join('types', 'products.type_id', '=', 'types.id')
+            ->select(
+                'products.id',
+                'products.name',
+                'products.description',
+                'products.quantity',
+                'products.price',
+                'products.imagem',
+                'products.type_id',
+                'types.name as type_name',
+                'products.created_at',
+                'products.updated_at'
+            )
+            ->when($request->name, fn($query, $name) => $query->where('products.name', 'like', "%{$name}%"))
+            ->when($request->type_id, fn($query, $typeId) => $query->where('products.type_id', $typeId))
+            ->when($request->min_quantity, fn($query, $quantity) => $query->where('products.quantity', '>=', $quantity))
+            ->when($request->max_quantity, fn($query, $quantity) => $query->where('products.quantity', '<=', $quantity))
+            ->orderBy('products.name')
+            ->get();
+
+        return Pdf::loadView('products.report-pdf', compact('products'))
+            ->download('relatorio-produtos.pdf');
+    }
+
     //
     public function create()
     {
@@ -28,7 +66,7 @@ class ProductsController extends Controller
             'supplier_id' => 'nullable|exists:suppliers,id',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
-        
+
         $data = [
             'name' => $request->name,
             'description' => $request->description,
@@ -77,7 +115,7 @@ class ProductsController extends Controller
 
         $product = Product::find($request->id);
         $imagemAntiga = null;
-        
+
         $data = [
             'name' => $request->name,
             'description' => $request->description,

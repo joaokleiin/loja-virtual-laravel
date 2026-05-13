@@ -5,20 +5,30 @@
 @section('content')
     <div class="space-y-8">
         <!-- Header -->
-        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-4xl font-bold text-gray-900 drop-shadow-sm">Produtos</h1>
-                    <p class="text-gray-600 mt-2 text-lg">Gerencie os produtos da sua loja</p>
-                </div>
-                <a href="{{ url('products/new') }}" class="inline-flex items-center px-6 py-3 bg-blue-600/80 backdrop-blur-sm text-white font-medium rounded-xl hover:bg-blue-700/90 transition-all duration-300 hover:shadow-xl hover:scale-105 border border-white/20">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                    </svg>
-                    Novo Produto
-                </a>
-            </div>
+<div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
+    <div class="flex flex-col gap-6 md:flex-row md:justify-between md:items-center">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-900 drop-shadow-sm">Produtos</h1>
+            <p class="text-gray-600 mt-2 text-lg">Gerencie os produtos da sua loja</p>
         </div>
+
+        <div class="flex flex-wrap gap-3">
+            <a href="{{ route('products.report') }}" class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-gray-800 font-medium rounded-xl hover:bg-white/30 transition-all duration-300 hover:shadow-xl hover:scale-105 border border-white/30">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6m-9 4h12a2 2 0 002-2V7a2 2 0 00-.586-1.414l-3-3A2 2 0 0016 2H6a2 2 0 00-2 2v15a2 2 0 002 2z"></path>
+                </svg>
+                Relatório
+            </a>
+
+            <a href="{{ url('products/new') }}" class="inline-flex items-center px-6 py-3 bg-blue-600/80 backdrop-blur-sm text-white font-medium rounded-xl hover:bg-blue-700/90 transition-all duration-300 hover:shadow-xl hover:scale-105 border border-white/20">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Novo Produto
+            </a>
+        </div>
+    </div>
+</div>
 
         <!-- Products Table -->
         <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 overflow-hidden">

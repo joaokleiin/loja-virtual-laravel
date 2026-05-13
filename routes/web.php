@@ -35,4 +35,7 @@ Route::get('/suppliers/update/{id}', [SuppliersController::class, 'edit']);
 Route::post('/suppliers/update/', [SuppliersController::class, 'update']);
 Route::get('/suppliers/delete/{id}', [SuppliersController::class, 'destroy']);
 
+Route::get('/products/report', [ProductsController::class, 'report'])->name('products.report');
+Route::get('/products/report/pdf', [ProductsController::class, 'reportPdf'])->name('products.report.pdf');
+
 require __DIR__.'/auth.php';
